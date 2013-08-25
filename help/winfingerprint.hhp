@@ -1,0 +1,25 @@
+[OPTIONS]
+Auto Index=Yes
+Compatibility=1.1 or later
+Compiled file=winfingerprint.chm
+Contents file=Table of Contents.hhc
+Default Font=,8,0
+Default topic=winfingerprint-options.htm
+Display compile progress=Yes
+Full text search stop list file=Search.stp
+Index file=Index.hhk
+Language=0x409 English (United States)
+Title=Winfingerprint Options
+
+
+[FILES]
+winfingerprint-options.htm
+resources.htm
+changelog.htm
+networktype.htm
+input-options.htm
+portscans.htm
+scan-options.htm
+
+[INFOTYPES]
+

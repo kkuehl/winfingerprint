@@ -1,0 +1,61 @@
+Basic 
+
+Fingerprinting:
+By Default, Winfingerprint will attempt to determine the current configuration
+of each server in the IP Address Range. This includes OS Version (Major and Minor)
+as well as type of software (i.e. PDC, BDC, NT WORKSTATION).
+No special privileges are required to perform this command.
+NOTE: Inside the Fingerprinting function, winfingerprint attempts to obtain
+Domain\Computername. This function call requires administrator privileges.
+If the call fails due to insufficient privileges, the IP address will be shown instead.
+
+
+NetBIOS Shares:
+Retrieves information about each shared resource on a server.
+No special privileges are required to perform this command.
+
+Users:
+Returns user account information.
+No special privileges are required to perform this command.
+
+Groups: 
+Returns group account information.
+No special privileges are required to perform this command.
+
+Null Sessions:
+Establishes a NULL IPC$ Session with the remote host.
+No special privileges are required to perform this command.
+
+Ping Hosts:
+Pings each host before scanning. DNS resolution also occurs.
+Works against non-win32 hosts as well.
+
+Date and Time:
+Returns date and time of remote server.
+No special privileges are required to perform this command.
+
+Registry:
+Determines Service Pack and Hotfix level of remote host by querying registry.
+
+Services:
+Connects to the service control manager on the specified computer and opens the
+specified service control manager database.
+
+Transports:
+Returns information about transport protocols, including MAC Address.
+No special privileges are required to perform this command.
+
+Sessions:
+Provides information about sessions established on a server.
+No special privileges are required to perform this command.
+
+Disks:
+Retrieves a list of disk drives on a server.
+Only members of the Administrators or Account Operators local group can
+successfully execute the NetServerDiskEnum function on a remote computer.
+
+
+TCP Port Range:
+Non-blocking TCP connect() portscan. With hardcoded 5 second timeout. Grabs banners. 
+
+

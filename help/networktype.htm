@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Winfingerprint Network Type</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+</HEAD>
+<BODY><FONT face="verdana,arial">
+<B>Network Type: NT DOMAIN</B><BR>
+<img alt="Network Type: NT Domain" src="network-type-domain.jpg"><br>
+<B>Network Type: Active Directory</B><BR>
+<img alt="Network Type: NT Domain" src="network-type-ad.jpg"><br>
+<B>Network Type: WMI</B><BR>
+<img alt="Network Type: WMI" src="network-type-wmi.jpg"><br>
+
+Winfingerprint can enumerate OS Version, Users, Groups and Services via three different methods:<br>
+NT DOMAIN uses the Net* Win32 APIs to gather information.<br>
+<a href="scan-options.htm#winfingerprint-d">Win Fingerprint Domain</a><br>
+<a href="scan-options.htm#users-d">Users Domain</a><br>
+<a href="scan-options.htm#groups-d">Groups Domain</a><br>
+<a href="scan-options.htm#services-d">Services Domain</a><br>
+<p>
+Active Directory uses the ADSI APIs to gather information.<br>
+You may have to download the <a href="http://www.microsoft.com/msdownload/platformsdk/sdkupdate/">Microsoft Platform SDK</a>
+for the ADSI method to work although the Winfingerprint installer does include activeds.dll and adsldpc.dll.<br>
+<a href="scan-options.htm#winfingerprint-ad">Win Fingerprint Active Directory</a><br>
+<a href="scan-options.htm"sessions-ad">Sessions Active Directory</a><br>
+* <a href="scan-options.htm#users-ad">Users Active Directory</a><br>
+* <a href="scan-options.htm#groups-ad">Groups Active Directory</a><br>
+* <a href="scan-options.htm#services-ad">Services Active Directory</a><br>
+NOTE: Under Windows 2000, The Active Directoy Scan method only works for WinFingerprint and Sessions, and does not work with Users, Groups, and Services. Under Windows XP, WinFingerprint, Users, Groups, Sessions, and Services all enumerate correctly.<br>
+<p>
+WMI uses the Windows Management Instrumentation APIs to gather information.<br>
+NOTE: WMI queries against remote systems require administrator privileges.<br>
+Winfingerprint's WMI can currently query, OS, Service Pack, Hot Fixes, MAC address, and Running Services.<br>
+
+</FONT></BODY></HTML>

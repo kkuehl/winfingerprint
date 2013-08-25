@@ -1,0 +1,71 @@
+Release:      Winfingerprint 0.4.1 02/03/2002 
+Homepage:     http://winfingerprint.sourceforge.net
+Email:        Kirby Kuehl - vacuum@users.souceforge.net
+Requirements: Windows NT4, Windows 2000, or Windows XP
+
+Changelog:
+
++ Updated User Enumeration code to display new win2k/xp information
++ Updated Winfingerprint OS Detection to Show more OS Types,
+  Re-enabled Platform and Comment information 
++ Updated NetBIOS Share information to include "type".
++ Wrote a "Real" help system instead of a lame text file.
++ Added fix for 22/tcp ssh not being in windows services file
++ Now winfingerprint starts with your actual ip address instead of
+   127.0.0.1
+! Time function reports errors to dialog rather than msg box
+
+ 
+
+0.4.1
++ _s*printf() to _sn*printf().
++ Win Fingerprinting is now an option
++ Fixed extremely slow TCP Portscanning found in 0.3.0 and 0.4.0
+  It's now quite useable !!
++ Added Active Directory Support which is currently turned off ;)
++ Added getservbyport() lookups to portscanning code.
++ Migrated from Installshield to Nullsoft SuperPimp.
+  From: http://www.nullsoft.com/free/nsis/
+  Finally adding README (instructions/changelog) to menu.
+  Adding uninstall to menu
+  Installshield = 1180KB (Bloat)
+  Superpimp     = 663KB
+  
++ Added GPL to sourcecode (winfingerprint has always been GPL)
++ Now works on Windows XP.
+
+
+0.4.0 11/14/2001
++ Added DNS Resolution to ICMP function.
++ Added Domain\computername to Fingerprinting Function.
+! Rewrote TCP Portscan. Now, non-blocking connect() scanner with banner grabbing capability.
+! GUI Changes (It's black).
+! Fixed poorly packaged installshield from 0.3.0 release.
+
+0.3.0 09/04/2001
++ Disk Enumeration
+! Fixed group enumeration
+! Lots of code cleanup.
+! Fixed session enumeration
+! Fixed remote date and time
++ IP Range validity checks.
+
+0.2.0
+Winfingerprint 0.2.0 07/11/2001 
++ Added IP Address Range support.
++ Added TCP Port Scan Range
++ Changed ClistBox to CEditBox
++ Added Save Output Function.
++ Made Null Sessions an option
+- Removed WNetEnumResource() (The old Network Enumeration Function)
+! Fixed Null Session Bug introduced in 0.1.0
+! Fixed ErrorHandler() to actually return appropriate error message.
+! Code Optimizations and Cleanups.
+
+Winfingerprint 0.1.0 03/12/2001 
+Initial release of winfingerprint with integrated GUI! This 
+version is basically winfingerprint 2.29 with an MFC GUI.
+winfingerprint 2.29 is a commandline application and is now
+available as winfingerprintclassic in CVS.
+
+Successful merger of winfingerprintclassic 2.29 command line version of winfingerprint and wfple 0.1.0. winfingerprintclassic was very stable although it was commandline. wfple was a short lived, limited edition as I migrated to the MFC GUI version.

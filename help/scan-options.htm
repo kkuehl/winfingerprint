@@ -1,0 +1,578 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<TITLE>Winfingerprint Scan Options</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+</HEAD>
+<BODY>
+<FONT face="verdana,arial">
+<img alt="Scan Options" src="scan-options.jpg"><br>
+<a name="top">
+<ul>
+<li><a href="#winfingerprint">Win32 OS Version</a> <font size="-2"><a href="#winfingerprint-d">Domain</a> <a href="#winfingerprint-ad">Active Directory</a></font>
+<li><a href="#null-sessions">Null Sessions</a>
+<li><a href="#netbios-shares">NetBIOS Shares</a>
+<li><a href="#date-time">Date and Time</a>
+<li><a href="#users">Users</a> <font size="-2"><a href="#users-d">Domain</a> <a href="#users-ad">Active Directory</a></font>
+<li><a href="#services">Services</a> <font size="-2"><a href="#services-d">Domain</a> <a href="#services-ad">Active Directory</a></font>
+<li><a href="#disks">Disks</a>
+<li><a href="#groups">Groups</a> <font size="-2"><a href="#groups-d">Domain</a> <a href="#groups-ad">Active Directory</a></font>
+<li><a href="#registry">Patch Level</a>
+<li><a href="#transports">MAC Addresss</a>
+<li><a href="#sessions">Sessions</a>
+<li><a href="#ping-hosts">Ping Hosts</a>
+<li><a href="#snmp">SNMP</a>
+<li><a href="#eventlog">Security Event Log</a>
+<li><a href="#rpc">RPC Bindings</a>
+</ul>
+NOTE: Winfingerprint, Users, Groups, and Services....
+<p>
+<a name="winfingerprint">
+<a name="winfingerprint-d">
+<B>Win32 OS Version - Network Type : NT DOMAIN</B><BR>
+<img alt="Network Type: NT Domain" src="network-type-domain.jpg"><br>
+Determines the current configuration of each scanned host using an SMB (Server Message Block) Query.
+This includes OS Version (Major and Minor) as well as type of software:<BR></FONT>
+<UL>
+  <LI>Primary Domain Controller 
+  <LI>Backup Domain Controller 
+  <LI>NT MEMBER SERVER 
+  <LI>NT WORKSTATION 
+  <LI>SQL SERVER 
+  <LI>NOVELL NETWARE SERVER 
+  <LI>WINDOWS FOR WORKGROUPS 
+  <LI>WINDOWS 9X 
+  <LI>Server running the Timesource service 
+  <LI>Apple File Protocol server 
+  <LI>Novell server 
+  <LI>Server sharing print queue 
+  <LI>Server running dial-in service 
+  <LI>Xenix server 
+  <LI>Microsoft File and Print for NetWare 
+  <LI>Server that can run the browser service 
+  <LI>Server running a browser service as backup 
+  <LI>Server running the master browser service 
+  <LI>Server running the domain master browser 
+  <LI>Terminal Server 
+  <LI>Part of a cluster 
+  <LI>Active Directory/Domain/Workgroup membership
+  <LI>NetBIOS (Network Basic Input/Output System) Computername
+  <LI>Computer SID (Security IDentifier)
+  </LI></UL>
+<FONT face="verdana,arial">Also displays Platform and Comment.<BR>
+Sample Output:<br>
+</font>
+<pre>
+Host Information:
+	IP Address: 192.168.1.1 test-2k.example.com
+	Domain: DOMAIN1
+	NetBIOS: TEST-2K
+	SID : S-1-5-21-778402230-1777874515-1923568537
+Fingerprint:
+	Role: NT WORKSTATION
+	Role: LAN Manager Workstation
+	Role: LAN Manager Server
+	Platform: 500
+	Version: 5.0
+	Comment: 
+</pre>
+<FONT face="verdana,arial">
+API: NetServerGetInfo Level 101 (No special privileges are required to perform this command).<BR>
+NOTE: Inside the Fingerprinting function, winfingerprint attempts to obtain the Domain and NetBIOS Computername in two different methods:<br>
+1: The NetWkstaGetInfo Level 102 requires Print or Server operator privileges, or membership of the Administrator or Account local groups to successfully execute the function on Windows NT 4. On Windows 2000, all authenticated users can view the information.<br>
+2: By sending an nbtstat-like udp packet, winfingerprint is able to obtain the NetBIOS computername of the remote host without any special privileges on the remote host.<br>
+<BR>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="winfingerprint-ad">
+<B>Win32 OS Version  - Network Type : Active Directory</B><BR>
+<img alt="Network Type: Active Directory" src="network-type-ad.jpg"><br>
+Sample Output:<br></font>
+<pre>
+Fingerprint:
+	Domain: DOMAIN1
+	NetBIOS: TEST-2K
+	SID : S-1-5-21-778402230-1777874515-1923568537
+	Operating System: Windows NT Version: 5.0
+	Organization: SourceForge
+	Processor : x86 Family 15 Model 2 Stepping 4 
+	Processor Count : Uniprocessor Free 
+	Computer owner: Kirby Kuehl
+
+</pre>
+<FONT face="verdana,arial">
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="null-sessions">
+<b>Null IPC$ Sessions</b>
+From a NULL session, it is possible to call APIs and use Remote Procedure calls to enumerate information.
+Example of how a null session would be manually established:<br>
+<i>net use \\10.0.0.1\ipc$ "" /user:""</i><br>
+Null IPC$ sessions are necessary to enumerate information on targets that are not part of the same domain or workgroup
+as the scanning host. Winfingerprint utilizes the WNetAddConnection3 API to establish null sessions. Upon the
+completion of the scan, the null session is disconnected using the WNetCancelConnection2 API.<br>
+
+NOTE: If Null Sessions cannot be established, it is probable that the target computer set restrictanyonymous to 1 or 2:<br>
+<pre>
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa]
+"restrictanonymous"=dword:00000002
+</pre>
+<br>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="netbios-shares">
+<b>NetBIOS Shares</b><br> 
+Retrieves information about each shared resource on a server.
+</font>
+<ul>
+<li> Share Name
+<li> Share Type
+<li> Optional Comment
+</ul>
+<FONT face="verdana,arial">
+Sample Output:<br></font>
+<pre>
+NetBIOS Shares:Name: IPC$ Remark: Remote IPCType: Interprocess communication (IPC)Name: ADMIN$ Remark: Remote AdminType: Special share reserved for interprocess communication (IPC$) or remote administration of the server (ADMIN$)Accessible without password.Name: C$ Remark: Default shareType: Special share reserved for interprocess communication (IPC$) or remote administration of the server (ADMIN$)Accessible without password.192.168.1.1 scanned in 2.25 seconds
+</pre>
+<FONT face="verdana,arial">
+NetBIOS shares are checked to see if they are accessible without password.<br>
+API: NetShareEnum Level 1 (No special group membership is required for level 1 calls).
+<br>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="date-time">
+<b>Date and Time</b><br>
+This option returns the time of day information from a specified server.<br>
+Sample Output:<br>
+</font>
+<pre>
+Date and Time:[9/21/2004]  -- 07:50:48.15192.168.1.1 scanned in 0.02 seconds
+</pre>
+<FONT face="verdana,arial">
+API: NetRemoteTOD No special group membership is required to successfully execute the NetRemoteTOD function.<br>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="users">
+Both Network Types (NT Domain and Active Directory) return the Password Policy for the system:<br>
+<ul>
+<li>Minimum Password Length
+<li>Maximum Password Age
+<li>Minimum Password Age
+<li>Forced Logoff Time
+<li>Password history Length
+<li>Attempts before Lockout
+<li>time between two login attempts
+<li>Lockout Duration
+</ul>
+<a name="users-d">
+<B>Users - Network Type: NT DOMAIN</B><BR>
+<img alt="Network Type: NT Domain" src="network-type-domain.jpg"><br>
+Returns user account information:<BR></FONT>
+<UL>
+  <LI>Username 
+  <LI>Userid 
+  <LI>Full Name 
+  <LI>Comment 
+  <LI>Login script executed 
+  <LI>Account Disabled 
+  <LI>Home directory is required 
+  <LI>No password required 
+  <LI>The user cannot change password 
+  <LI>The account is locked 
+  <LI>Password does not expire 
+  <LI>The account is enabled for delegation 
+  <LI>The user's password is stored under reversible encryption in the Active 
+  Directory. 
+  <LI>Requires the user to log on to the user account with a smart card. 
+  <LI>Restrict this principal to use only Data Encryption Standard (DES) 
+  encryption types for keys. 
+  <LI>This account does not require Kerberos preauthentication for logon. 
+  <LI>The user's password has expired. </LI></UL><FONT face="verdana,arial">
+Sample Output:<br></font>
+<pre>
+Users:
+	Administrator [500] ""
+	- Built-in account for administering the computer/domain
+        SID : S-1-5-21-778402230-1777874515-1923568549-500
+	- The logon script executed. This value must be set for LAN Manager 2.0 or Windows NT.
+	- Password does not expire.<br>	Guest [501] ""
+	SID : S-1-5-21-778402230-1777874515-1923568549-501
+	- Built-in account for guest access to the computer/domain
+	- The logon script executed. This value must be set for LAN Manager 2.0 or Windows NT.
+	- The user's account is disabled.
+	- No password is required.
+	- Password does not expire.
+	vacuum [1004] "vacuum"
+	SID : S-1-5-21-778402230-1777874515-1923568549-1004
+	- The logon script executed. This value must be set for LAN Manager 2.0 or Windows NT.
+	- Password does not expire.
+</pre>
+<p>
+<a name="users-ad">
+<FONT face="verdana,arial">
+<B>Users - Network Type: Active Directory</B><BR></font>
+<img alt="Network Type: NT Domain" src="network-type-ad.jpg"><br>
+<pre>
+User: Administrator GUID: {D83F1060-1E71-11CF-B1F3-02608C9E7553}<br>User: Guest GUID: {D83F1060-1E71-11CF-B1F3-02608C9E7553}<bR>User: HelpAssistant GUID: {D83F1060-1E71-11CF-B1F3-02608C9E7553}<bR>User: kkuehl GUID: {D83F1060-1E71-11CF-B1F3-02608C9E7553}<bR>User: SUPPORT_388945a0 GUID: {D83F1060-1E71-11CF-B1F3-02608C9E7553}<bR>User: VUSR_KKUEHL-XP GUID: {D83F1060-1E71-11CF-B1F3-02608C9E7553}<bR>
+</pre>
+<FONT face="verdana,arial">
+API: NetQueryDisplayInformation Level 1 No special privileges are required to perform this command. <BR>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="services">
+<a name="services-d">
+<B>Services - Network Type: NT DOMAIN</B><BR>
+<img alt="Network Type: NT Domain" src="network-type-domain.jpg"><br>
+Enumerates services in the specified service control manager database. The name and status of each service 
+are provided.<br>
+Sample Output:<br>
+</font>
+<pre>
+Running Services:
+	AudioSrv -- Windows
+	AudioAvSynMgr -- AVSync
+	ManagerBITS -- Background Intelligent Transfer
+        ServiceBrowser -- Computer Browser
+        CryptSvc -- Cryptographic Services
+        CVPND -- Cisco Systems, Inc. VPN
+        ServiceDhcp -- DHCP	ClientDnscache -- DNS ClientER
+	Svc -- Error Reporting Service
+	Eventlog -- Event Log
+	EventSystem -- COM+ Event System
+	helpsvc -- Help and Support
+	inv32cli -- SMS 	Client InventoryIrmon -- Infrared Monitor
+ 	lanmanserver -- Serverlanman
+	workstation -- Workstation
+	LmHosts -- TCP/IP NetBIOS Helper
+	McShield -- McShield
+	Messenger -- Messenger
+	Netlogon -- Net Logon
+	Netman -- Network Connections
+	Nla -- Network Location
+ 	Awareness (NLA)PlugPlay -- Plug and Play
+	ProtectedStorage -- Protected Storage
+	RasMan -- Remote Access Connection Manager
+	RemoteRegistry -- Remote Registry
+	RpcSs -- Remote Procedure Call (RPC)
+	SamSs -- Security Accounts
+ 	ManagerSchedule -- Task Scheduler
+	seclogon -- Secondary Logon
+	SENS -- System Event
+	NotificationShellHWDetection -- Shell Hardware Detection
+	Spooler -- Print Spooler
+	srservice -- System Restore Service
+	SSDPSRV -- SSDP Discovery Service
+	TapiSrv -- Telephony
+	TermService -- Terminal Services
+	Themes -- Themes
+	TrkWks -- Distributed Link Tracking Client
+	uploadmgr -- Upload Manager
+	W32Time -- Windows Time
+	WebClient -- WebClient
+	winmgmt -- Windows Management Instrumentation
+	WmdmPmSp -- Portable Media Serial Number
+	wuauserv -- Automatic Updates
+	wuser32 -- SMS Remote Control 	AgentWZCSVC -- Wireless Zero Configuration
+</pre>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="services-ad">
+<FONT face="verdana,arial">
+<B>Services - Network Type: Active Directory</B><BR>
+<img alt="Network Type: NT Domain" src="network-type-ad.jpg"><br>
+Sample Output:</font><br>
+<pre>
+Service:
+Alerter GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: ALG GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: AppMgmt GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: AudioSrv GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: AvSynMgr GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: BITS GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Browser GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: cisvc GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: ClipSrv GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: COMSysApp GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: CryptSvc GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: CVPND GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Dhcp GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: dmadmin GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: dmserver GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Dnscache GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: ERSvc GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Eventlog GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: EventSystem GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: FastUserSwitchingCompatibilityGUID:{C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: helpsvc GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: HidServ GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: ImapiService GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: inv32cli GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Irmon GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: lanmanserver GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: lanmanworkstation GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: LmHosts GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: McShield GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Messenger GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: mnmsrvc GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: MSDTC GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: MSIServer GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: NetDDE GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: NetDDEdsdm GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Netlogon GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Netman GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Nla GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: NtLmSsp GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: NtmsSvc GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: PlugPlay GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: PolicyAgent GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: ProtectedStorage GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: RasAuto GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: RasMan GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: RDSessMgr GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: RemoteAccess GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: RemoteRegistry GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: RpcLocator GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: RpcSs GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: RSVP GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: SamSs GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: SCardDrv GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: SCardSvr GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Schedule GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: seclogon GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: SENS GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: SharedAccess GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: ShellHWDetection GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Spooler GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: srservice GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: SSDPSRV GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: stisvc GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: SwPrv GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: SysmonLog GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: TapiSrv GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: TermService GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Themes GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: TlntSvr GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: TrkWks GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: uploadmgr GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: upnphost GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: UPS GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Visual Studio Analyzer RPC bridge GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: VSS GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: W32Time GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: WebClient GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: winmgmt GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: WmdmPmSp GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: Wmi GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: WmiApSrv GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: wuauserv GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: wuser32 GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+Service: WZCSVC GUID: {C3968E50-4C66-11CF-A995-00AA006BC149}
+</pre>
+<FONT face="verdana,arial">
+<BR>APIS: OpenSCManager and EnumServicesStatus 
+<BR>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="disks">
+<b>Disks</b><br>
+Retrieves a list of disk drives on a server.<Br>
+Sample Output:<br>
+</font>
+<pre>
+Disks:
+	Disk: C:
+	Disk: D:
+</pre>
+<font face = "verdana,arial">
+API: NetServerDiskEnum Only members of the Administrators or Account Operators local group can 
+successfully execute the <B>NetServerDiskEnum</B> function on a remote computer.<br>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="groups">
+<a name="groups-d">
+<b>Groups - Network Type: NT DOMAIN</b><br>
+<img alt="Network Type: NT Domain" src="network-type-domain.jpg"><br>
+This option makes two different calls. 
+NetLocalGroupEnum will return information on all local groups. 
+NetQueryDisplayInformation (Level 3) will return global groups which is 
+excellent against Domain Controllers.<BR><B>Local Groups</B><BR>Returns group 
+account information:<BR></FONT>
+<UL>
+  <LI>Group Name 
+  <LI>Comment </LI></UL>
+<FONT face="verdana,arial">
+API: NetLocalGroupEnum Level 1 No special privileges are required to perform this command 
+(NetLocalGroupEnum). <BR><B>Global Groups</B><BR>Returns group account 
+information:<BR></FONT>
+<UL>
+  <LI>Group Name 
+  <LI>Group Comment 
+  <LI>Group ID </LI></UL>
+<FONT face="verdana,arial">
+Sample Output:<br></font>
+<pre>
+Local Groups:
+	Administrators "Administrators have complete and unrestricted access to the computer/domain"
+	Backup Operators "Backup Operators can override security restrictions for the sole purpose of backing up or restoring files"
+	Guests "Guests have the same access as members of the Users group by default, except for the Guest account which is further restricted"
+	Power Users "Power Users possess most administrative powers with some restrictions.  Thus, Power Users can run legacy applications in addition to certified applications"
+	Replicator "Supports file replication in a domain"<br>	Users "Users are prevented from making accidental or intentional system-wide changes.  Thus, Users can run certified applications, but not most legacy applications"
+Global Groups:
+	None "Ordinary users" [513]
+"None" Group Members
+	Administrator
+	Guest
+	VUSR_TESTXP-GDE934
+	vacuum
+</pre>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="groups-ad">
+<FONT face="verdana,arial">
+<b>Groups - Network Type: Active Directory</b><br>
+<img alt="Network Type: NT Domain" src="network-type-ad.jpg"><br>
+Sample Output:<br></font>
+<pre>
+Group: Administrators GUID: {D9C1AAD0-1E71-11CF-B1F3-02608C9E7553}<br>Group: Backup Operators GUID: {D9C1AAD0-1E71-11CF-B1F3-02608C9E7553}<br>Group: Guests GUID: {D9C1AAD0-1E71-11CF-B1F3-02608C9E7553}<br>Group: Network Configuration Operators GUID: {D9C1AAD0-1E71-11CF-B1F3-02608C9E7553}<br>Group: Power Users GUID: {D9C1AAD0-1E71-11CF-B1F3-02608C9E7553}<br>Group: Remote Desktop Users GUID: {D9C1AAD0-1E71-11CF-B1F3-02608C9E7553}<br>Group: Replicator GUID: {D9C1AAD0-1E71-11CF-B1F3-02608C9E7553}<br>Group: Users GUID: {D9C1AAD0-1E71-11CF-B1F3-02608C9E7553}<br>
+</pre>
+<FONT face="verdana,arial">
+API: NetQueryDisplayInformation Level 3 No special privileges are required to perform this command 
+(NetQueryDisplayInformation).<BR>Group Members are enumerated using NetGroupGetUsers<BR>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="registry">
+<b>Registry (Service Pack and Hotfix)</b><br>
+This option queries the remote registry and if successful, will report back the installed Service Pack as well as any hotfixes.<br>
+Sample Ouptut:<br>
+</font>
+<pre>
+Patch Level:
+Q307869 Windows XP Hotfix (SP1) [See Q307869 for more information]
+Q309521 Windows XP Hotfix (SP1) [See Q309521 for more information]
+Q309691 Windows XP Hotfix (SP1) [See Q309691 for more information]
+Q310437 Windows XP Hotfix (SP1) [See Q310437 for more information]
+Q311889 Windows XP Hotfix (SP1) [See Q311889 for more information]
+Q311967 Windows XP Hotfix (SP1) [See Q311967 for more information]
+Q313484 Windows XP Hotfix (SP1) [See Q313484 for more information]
+Q314147 Windows XP Hotfix (SP1) [See Q314147 for more information]
+Q314862 Windows XP Hotfix (SP1) [See Q314862 for more information]
+Q315000 Windows XP Hotfix (SP1) [See Q315000 for more information]
+Q315403 Windows XP Hotfix (SP1) [See Q315403 for more information]
+Q317277 Windows XP Hotfix (SP1) [See Q317277 for more information]
+Q318138 Windows XP Hotfix (SP1) [See Q318138 for more information]
+Q319580 Windows XP Hotfix (SP1) [See Q319580 for more information]
+</pre>
+<font face = "verdana,arial">
+APIS: RegConnectRegistry, RegOpenKeyEx, RegEnumKeyEx,RegQueryValueKeyEx, RegCloseKey.
+<br>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="transports">
+<b>NBT Information</b><br>
+Supplies information about transport protocols that are managed by the server.<br>
+</font>
+<ul>
+<li> Transport Name
+<li> Transport Address (MAC)
+</ul>
+<FONT face="verdana,arial">
+Sample Output<br></font>
+<pre>
+Transports:
+	TEST-W2K Transport: \Device\NetBT_Tcpip_{4E93603E-0A88-42DA-B4F8-9C2AE2366268}
+	Network Address: 00096be057b3
+	TEST-W2K Transport: \Device\NetbiosSmb
+	Network Address: 000000000000
+</pre>
+<FONT face="verdana,arial">
+API: NetServerTransportEnum Level 0 No special group membership is required to successfully execute the NetServerTransportEnum function.<br>
+Windows NT/2000/XP: Requires Windows NT 3.1 or later.<br>
+Windows 95/98/ME: Unsupported.<br>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="sessions">
+<a name="sessions-d">
+<B>Sessions - Network Type: NT DOMAIN</B><BR>
+<img alt="Network Type: NT Domain" src="network-type-domain.jpg"><br>
+Provides information about sessions established on a server. A session is recorded when a user at a client successfully contacts a server.
+A successful session occurs when the two computers are on the same network, and the user has a user name and password that are accepted by
+the server. A user at a client has to have a session with a server before he or she can use the resources of the server, and a session is
+not established until a user at a client connects to a resource. A client and a server have only one session, but they can have many entry
+points, or connections, to resources.<BR>
+
+Session Enumeration using Network Type NT Domain enumerates the following: 
+</FONT>
+<UL>
+  <LI>Computer Name 
+  <LI>User Name 
+  <LI>Seconds Active Time 
+  <LI>Seconds Idle Time
+</UL>
+<FONT face="verdana,arial">
+API: NetSessionEnum Level 10<BR>
+<a href="#top">Return to top of page</a><br>
+<a name="sessions-ad">
+<b>Sessions - Network Type: Active Directory</b><br>
+<img alt="Network Type: NT Domain" src="network-type-ad.jpg"><br>
+Session Enumeration using Network Type Active Directory enumerates the following:
+<UL>
+  <LI>Computer Name 
+  <LI>User Name 
+  <LI>Seconds Active Time 
+  <LI>Seconds Idle Time
+</UL>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="ping-hosts">
+<b>Ping</b><br>
+Verifies IP-level connectivity to another TCP/IP computer by sending Internet Control Message Protocol (ICMP) Echo Request messages.
+The receipt of corresponding Echo Reply messages are displayed, along with round-trip times.
+If host responds, continue with remaining options, otherwise finish.
+The number of ICMP ECHO_REQUEST packets is determined by the Retries: parameter. Default setting 3.
+<br>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="traceroute">
+<b>Traceroute</b><br>
+Determines the path taken to a destination by sending Internet Control Message Protocol (ICMP) Echo Request messages to the destination with incrementally increasing Time to Live (TTL) field values. The path displayed is the list of near-side router interfaces of the routers in the path between a source host and a destination.
+<br>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="snmp">
+<b>Simple Network Management Protocol</b>
+<ul>
+<li>system.sysDescr
+<li>system.sysObjectID
+<li>system.sysUpTime
+<li>system.sysName
+<li>system.sysLocation
+<li>ip.ipRouteTable.ipRouteEntry.ipRouteDest
+<li>interfaces.ifTable.ifEntry.ifDescr
+</ul>
+For Example:<br>
+<pre>
+
+</pre>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="eventlog">
+<b>Security Event Log</b><br>
+Enumerates the security event log. For Example:<br>
+<pre>
+00  Event ID: 0x00000205 Time Generated: Fri Nov 29 10:05:31 2002
+Time Written: Fri Nov 29 10:05:31 2002
+Success Audit Event
+SourceName: Security
+ComputerName: TEST-W2K
+</pre>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="rpc">
+<b>RPC Bindings Enumeration</b><br>
+The ncacn_nb_tcp keyword is used to identify TCP over NetBIOS as the protocol family for the endpoint.<br>
+The ncacn_np keyword identifies named pipes as the protocol family for the endpoint. On Microsoft®Windows 95/98, ncacn_np is supported only for client applications.<br>
+The ncacn_ip_tcp keyword identifies TCP/IP as the protocol family for the endpoint.<br>
+The ncadg_ip_udp keyword identifies the datagram version of TCP/IP as the protocol family for the endpoint.<br>
+The ncacn_http keyword identifies the Microsoft Internet Information Server (IIS) as the protocol family for the endpoint.<br>
+
+<a href="#top">Return to top of page</a><br>
+</BODY></HTML>

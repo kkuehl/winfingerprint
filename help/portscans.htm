@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Winfingerprint TCP/UDP/ICMP Scans</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+</HEAD>
+<BODY>
+<font face = "verdana,arial">
+<img alt="TCP and UDP Portscans" src="portscans.jpg"><br>
+Winfingerprint can perform TCP SYN, TCP connect (banner grabbing), UDP, and ICMP Scans.<br>
+<ul>
+<li><a href="#tcp">TCP Banner Grabbing Portscan</a>
+<li><a href="#udp">UDP Portscan</a>
+<li><a href="scan-options.htm#ping-hosts">ICMP Scan</a>
+</ul>
+Choose a valid port range 1-65535 for both TCP and UDP Portscans (they do not have to be equal).<br>
+NOTE: By altering the Timeout (Default 5 seconds), you can adjust the select() timeout for the TCP/UDP/ICMP/SNMP Scans.<br>
+The interface drop down selection is only used by the TCP SYN Portscan option to determine which interface (IP address and MAC address) use as 
+the source protocol and hardware address. Max Connections, limits the total number of maximum connections the TCP and UDP connect() scans will attempt during one pass.<br>
+<a name="tcp">
+<b>TCP SYN and connect() based Portscans</b><br>
+Winfingerprint first performs a TCP SYN scan. If the port is open (responds with a SYN|ACK) and the report typically returns a banner
+(21/ftp, 22/ssh, 23/telnet, 25/SMTP, 80/HTTP, 110/POP3, 119/NNTP, 143/IMAP, 443/HTTPS), winfingerprint will then perform a 
+TCP non-blocking <A href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/wcewinsk/htm/_wcesdk_connect_function.asp">connect</a> portscan against those open ports.<br>
+Looks up portname using <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winsock/wsapiref_8y9e.asp">getservbyport</a><br>
+<br>
+<a href="http://msdn.microsoft.com/library/en-us/wcewinsk/htm/_wcesdk_select.asp">select</a><br>
+<a href="http://msdn.microsoft.com/library/en-us/wcewinsk/htm/_wcesdk_send.asp">send</a> and
+<A href="http://msdn.microsoft.com/library/en-us/wcewinsk/htm/_wcesdk_recv.asp">recv</a> timeout
+<A href="http://msdn.microsoft.com/library/en-us/wcewinsk/htm/_wcesdk_setsockopt.asp">(setsockopt)</a> 5 seconds.<br>
+<br>
+<p>
+<a name="udp">
+<b>UDP Portscan</b><br>
+UDP non-blocking <A href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/wcewinsk/htm/_wcesdk_connect_function.asp">connect</a> portscan.<br>
+Looks up portname using <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winsock/wsapiref_8y9e.asp">getservbyport</a><br>
+<br>
+<a href="http://msdn.microsoft.com/library/en-us/wcewinsk/htm/_wcesdk_select.asp">select</a><br>
+<a href="http://msdn.microsoft.com/library/en-us/wcewinsk/htm/_wcesdk_send.asp">send</a> and
+<A href="http://msdn.microsoft.com/library/en-us/wcewinsk/htm/_wcesdk_recv.asp">recv</a> timeout
+<A href="http://msdn.microsoft.com/library/en-us/wcewinsk/htm/_wcesdk_setsockopt.asp">(setsockopt)</a> 5 seconds.<br>
+</font>
+</BODY>
+</HTML>

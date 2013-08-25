@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Winfingerprint Input Options</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+</HEAD>
+<BODY><FONT face="verdana,arial">
+<a name="top">
+Winfingerprint supports four different input options:<br>
+<ul>
+<li><a href="#ip-range">IP Range</a>
+<li><a href="#ip-list">IP List</a>
+<li><a href="#single-host">Single Host</a>
+<li><a href="#neighborhood">Neighborhood</a>
+</ul>
+<p>
+<a name="ip-range"><B>IP Range</B><BR>
+<img alt="IP Range" src="ip-range.jpg"><br>
+Winfingerprint will scan from the starting IP address through the ending IP address with the selected scanning options, 
+skipping IP address ending in .255. IP Ranges can also be defined using a netmask (Example: 255.255.255.0) or and inverted
+netmask (Example: 0.0.0.255)<br>
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="ip-list"><B>IP List</B><BR>
+<img alt="IP List" src="ip-list.jpg"><br>
+The full path of a list of IP addresses or NetBIOS names can by typed into the "IP Address List Filename:" edit box or
+the filename can be chosen via the familiar "Open File" dialog method by pressing the "Browse" button.<br>
+The list of IP Addresses/NetBIOS names can be in one of the following formats:<br>
+On host per line with no leading spaces.<br>
+Example:<br>
+<pre>
+10.0.0.1
+TEST-W2k
+TEST-XP
+TEXT-NT4
+10.0.0.5
+</pre>
+
+A list of IP Ranges.<br>
+Example:<br>
+<pre>
+192.168.1.1 - 192.168.1.15
+10.0.0.2 - 10.0.0.1.183
+</pre>
+
+A list of IP Ranges using Netmasks.<br>
+Example:<br>
+<pre>
+192.168.1.1 - 255.255.255.0
+10.0.0.2 - 255.255.255.252
+</pre>
+
+A list of IP Ranges using Inverted Netmasks.<br>
+Example:<br>
+<pre>
+192.168.1.1 - 0.255.255.255
+10.0.0.2 - 252.255.255.255
+</pre>
+
+<a href="#top">Return to top of page</a><br>
+<p>
+<a name="single-host"><B>Single Host</B><BR>
+<img alt="Single Host" src="single-host.jpg"><br>
+Enter the IP Address or NetBIOS name of the target computer and it will be scanned with the selected options.<br>
+<a href="#top">Return to top of page</a><br>
+
+<p>
+<a name="neighborhood"><b>Neighborhood</b><br>
+<img alt="Neighborhood" src="neighborhood.jpg"><br>
+Leave this option blank to enumerate the "Network Neighborhood" from the root, or specify a starting domain from which to begin enumeration.
+
+NOTE: In Windows domains and workgroups one computer maintains a list of resources on the network. This list, called the Browse List, contains
+a list of shares, printers, etc, that are available on the network. By default, all computers with the SMB protocol installed advertise
+themselves to this resource list, maintained by the Master Browser, regardless of whether they have any resources to provide or not.<br>
+When "Neighborhood" is selected, this is the list that is scanned. If a computer has set:<br>
+<pre>
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\lanmanserver\parameters]
+"Hidden"=dword:00000001
+</pre>
+the computer will not be scanned.
+
+
+<a href="#top">Return to top of page</a><br>
+</FONT>
+</BODY>
+</HTML>

@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<OBJECT type="text/site properties">
+	<param name="Category" value="Winfingerprint Options">
+	<param name="CategoryDesc" value=" ">
+	<param name="Window Styles" value="0x800025">
+	<param name="ImageType" value="Folder">
+</OBJECT>
+<UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Winfingerprint Options">
+		<param name="Local" value="winfingerprint-options.htm">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Date and Time">
+			<param name="Local" value="scan-options.htm#date-time">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Disks">
+			<param name="Local" value="scan-options.htm#disks">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Event Log">
+			<param name="Local" value="scan-options.htm#eventlog">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Groups">
+			<param name="Local" value="scan-options.htm#groups">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NetBIOS Shares">
+			<param name="Local" value="scan-options.htm#netbios-shares">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Network Type">
+			<param name="Local" value="networktype.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Null IPC$ Session">
+			<param name="Local" value="scan-options.htm#null-sessions">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="ICMP (Ping)">
+			<param name="Local" value="scan-options.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Input Type">
+			<param name="Local" value="input-options.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Patch Level">
+			<param name="Local" value="scan-options.htm#registry">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="RPC Bindings">
+			<param name="Local" value="scan-options.htm#rpc">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="SNMP">
+			<param name="Local" value="scan-options.htm#snmp">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Services">
+			<param name="Local" value="scan-options.htm#services">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Sessions">
+			<param name="Local" value="scan-options.htm#sessions">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="TCP SYN Portscan">
+			<param name="Local" value="portscans.htm#tcp">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Traceroute">
+			<param name="Local" value="scan-options.htm#traceroute">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="MAC Address">
+			<param name="Local" value="scan-options.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="UDP Portscan">
+			<param name="Local" value="portscans.htm#udp">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Users">
+			<param name="Local" value="scan-options.htm#users">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Win32 OS Version">
+			<param name="Local" value="scan-options.htm#winfingerprint">
+			</OBJECT>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Project Resources">
+		<param name="Local" value="resources.htm">
+		<param name="URL" value="resources.htm">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Resources">
+			<param name="Local" value="resources.htm">
+			</OBJECT>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="History">
+		<param name="Local" value="changelog.htm">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Change Log">
+			<param name="Local" value="changelog.htm">
+			</OBJECT>
+	</UL>
+</UL>
+</BODY></HTML>

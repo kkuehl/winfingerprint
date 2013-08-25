@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Banner Grabbing">
+		<param name="Name" value="Winfingerprint TCP/UDP/ICMP Scans">
+		<param name="Local" value="portscans.htm#tcp">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Change Log">
+		<param name="Name" value="Winfingerprint Changelog">
+		<param name="Local" value="changelog.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Date">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#date-time">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Disk Enumeration">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#disks">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Group Enumeration">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#groups">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Hot Fix">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#registry">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="ICMP">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#ping-hosts">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Input Type">
+		<param name="Name" value="Winfingerprint Input Options">
+		<param name="Local" value="input-options.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="MAC Address">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#transports">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="NetBIOS Shares">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Network Type">
+		<param name="Name" value="Winfingerprint Network Type">
+		<param name="Local" value="networktype.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Null Sessions">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#null-sessions">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Options">
+		<param name="Name" value="Winfingerprint Options">
+		<param name="Local" value="winfingerprint-options.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="OS Detection">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#winfingerprint">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Ping">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#ping-hosts">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Registry">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#registry">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Service Enumeration">
+		<param name="Name" value="TCP Portscan">
+		<param name="Local" value="opt-portscan.htm">
+		<param name="Name" value="Winfingerprint TCP/UDP/ICMP Scans">
+		<param name="Local" value="portscans.htm#tcp">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Service Pack">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#registry">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Sessions">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#null-sessions">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#sessions">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Share Enumeration">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#netbios-shares">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="TCP Portscan">
+		<param name="Name" value="Winfingerprint TCP/UDP/ICMP Scans">
+		<param name="Local" value="portscans.htm#tcp">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="UDP Portscan">
+		<param name="Name" value="Winfingerprint TCP/UDP/ICMP Scans">
+		<param name="Local" value="portscans.htm#udp">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Time">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#date-time">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="NBT Information">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#transports">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="User Enumeration">
+		<param name="Name" value="Winfingerprint Scan Options">
+		<param name="Local" value="scan-options.htm#users">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Winfingerprint">
+		<param name="Name" value="Winfingerprint Options">
+		<param name="Local" value="winfingerprint-options.htm">
+		<param name="Name" value="Winfingerprint">
+		<param name="Local" value="opt-winfingerprint.htm">
+		<param name="Name" value="Change Log">
+		<param name="Local" value="changelog.htm">
+		</OBJECT>
+</UL>
+</BODY></HTML>

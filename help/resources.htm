@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<Title>Resources</Title>
+</HEAD>
+<BODY>
+<font face = "verdana","arial">
+<b><h3>Frequently Asked Questions</h3></b><br>
+<p>
+<i>Q: Will Winfingerprint work on Windows 95/98/Me?</i><br>
+A: No, Winfingerprint requires access to APIs only available on Windows NT 4/2000/XP<br>
+<p>
+<i>Q: Where is the source code?</i><br>
+A: The sourcecode is available via <a href="http://www.wincvs.org">CVS</a> from <A href="http://www.sourceforge.net">Sourceforge</a><br>
+<pre>
+ cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/winfingerprint login<br> 
+ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/winfingerprint co winfingerprint<br> 
+</pre>
+<i>Q: How can I improve scanning performance?</i><br>
+A: Adjust the following registry settings at your own risk. You can determine if this modification is necessary by
+running the following command from a command prompt: <b>netstat -an 10</b>. If you notice excessive connections in the TIME_WAIT state, or if you seem
+to have exhausted all ephemeral ports between 1024-5000, you need to modify the following registry setting.<br>
+Save the following snippet to a file with a .reg extension:<br>
+<p>
+<i>Q: If you get a "WLDAP32.DLL" related error on windows NT 4.0
+A: If you are running Windows NT 4.0, you must install the Active Directory Client Extension (DSClient) for Windows NT 4.0.
+It is available here: http://www.microsoft.com/windows2000/server/evaluation/news/bulletins/adextension.asp
+<p>
+<i>Q: I am getting a Winpcap Related error.
+A: You must be running Winpcap 3.01alpha or 3.10 beta or newer.
+
+<hr>
+<pre>
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters]
+"TcpTimedWaitDelay"=dword:0000001e
+
+; Description: This parameter determines the length of time that a connection will
+; stay in the TIME_WAIT state when being closed. While a connection is in the TIME_WAIT
+; state, the socket pair cannot be re- used. This is also known as the "2MSL" state, as
+; by RFC the value should be twice the maximum segment lifetime on the network. See RFC793
+; for further details. Valid Range: 30-300 decimal (seconds)
+; The default is 240 seconds (4 minutes) 
+
+"MaxUserPort"=dword:0000fffe
+
+; Valid Range: 5000-65534 (decimal) Default: 0x1388 (5000 decimal) 
+; Description: This parameter controls the maximum port number used when an application
+; requests any available user port from the system. Normally, ephemeral (that is,
+; short-lived) ports are allocated between the values of 1024 and 5000 inclusive. 
+
+; Windows NT 4 machines should replace "Windows Registry Editor Version 5.00" with REGEDIT4
+
+</pre>
+<hr>
+<b><h3>Resources used for Winfingerprint Development</h3></b><br>
+Microsoft Visual C++ 6.0 Versions up until 0.5.2<br>
+Microsoft Visual C++ .NET 2003 Versions 0.5.3 and newer<br>
+<a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp">Microsoft HTML Help Workshop</a><br>
+<a href="http://msdn.microsoft.com">MSDN</a><br>
+<A href="http://nsis.sourceforge.net">Nullsoft SuperPimp Installer</a><br>
+<a href="http://winpcap.polito.it">WinPcap</a><br>
+
+
+
+</BODY>
+</HTML>

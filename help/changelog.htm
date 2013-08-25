@@ -1,0 +1,348 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Winfingerprint Changelog</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+</HEAD>
+<BODY>
+<font face = "verdana","arial">
+<b><h3>Change Log</h3></b><br>
+<b>0.6.2 Released 05/19/2005</b>
+<ul>
+<li>Upgraded NSIS to 2.06
+<li>NSIS: No longer deletes MFC DLLs on uninstall.
+<li>NSIS: Verify OS is not 95, 98, or Me before installing since those OSes are unsupported.
+<li>Fix ICMP Traceroute support for NT 2000 and NT4 by using LoadlLibrary icmp.dll.
+<li>Actually FreeLibrary()s.
+<li>Improve RPC Bindings Enumeration output.
+</ul>
+<b>0.6.1 Released 03/03/2005</b>
+<ul>
+<li>Don't call LoadLibrary/GetProcAddress every time ICMP_Traceroute() is called.
+<li>Move member variable initialization to Class constructor where it belongs.
+This removes lots of SetWindowText() and SetCheck() calls in OnInitDialog();
+<li>Our IP Address was available in three different structs populated in OnInitDialog(). Remove redundant function calls.
+<li>Move all WinPcap related initialization from Dialog Class to Engine Class where it is used only by the TCP_Raw_Sockets()
+function when Winpcap is available. This cleans up lots of code.
+<li>Move interface information gathering out of TCP_Raw_Sockets() since it was called once for every destination IP Address.
+Now only call once upon initialization to improve performance.
+<li>Do not perform TCP connect() checks for TCP 445 and 139 if no NetBIOS over TCP options are checked.
+</ul>
+<b>0.6.0 Released 12/13/2004</b>
+<ul>
+<li>Added ICMP Traceroute.
+<li>Added WMI User and Group enumeration functions.
+<li>Added WMI NetBIOS shares enumeration which also checks for accessiblity with current credentials.
+<li>Added Database hooks so that winfingerprint can write output to MySQL database in a future release.
+<li>Fixed WMI and Active Directory enumeration methods. They have both been broken since December 22, 2003 without anyone submitting a bug report!?
+<li>Fixed Network Neighborhood enumeration.
+<li>Fix bug in TCP SYN scan where IP address of first UP interface was used instead of selected interface.
+<li>WMI Services enumeration was not hooked to Launch() function so it was never called.
+<li>ADSI User, Group, and Service Enumerations which all use the same API call now display only the results from
+the enumeration options selected from the GUI rather than all of them.
+<li>NetBIOS shares are now reported with NetBIOS name rather than IP Address when possible. Report "Accessible with current credentials" instead of "Accessible without password".
+<li>Remove duplicates for WMI and Net Transport MAC Addresses.
+<li>Limit NetBIOS, Domain, and MAC output from UDP packet output.
+<li>Renamed Registry option to "Patch Level" because two methods are used, either WMI or Registry querying.
+<li>Renamed NBT Information to MAC Address and cleaned up all methods to only report the MAC address.
+<li>Began standardizing output. Supressed NBT check output for TCP 139/445.
+<li>Perform Computer SID lookup for WMI and ADSI enumerations.
+<li>RPC Enumerations have long been disabled under WMI due to a crash. The cleanup process has apparently fixed this crash so it is reenabled.
+<li>TCP SYN scans against localhost are skipped when winpcap is present. Now fallback to TCP connect() scan for localhost
+when winpcap is present.
+<li>Upgrade to NSIS 2.03. Dramatically improved winfingerprint installer script.
+</ul>
+
+<b>0.5.13 Released 11/06/2004</b>
+<ul>
+<li>Dynamically link wpcap.dll and packet.dll. Winfingerprint will now again work without WinPcap although TCP SYN
+portscans will be unavailable.
+<li>Automatically fall back to TCP non-blocking connect TCP scans if WinPcap is not available.
+<li>Do not TCP SYN scan the local computer (when winpcap is available) as it will fail.
+<li>Test for NetBIOS over TCP presence with TCP connect() rather than TCP SYN as it has proven to be much more accurate.
+</ul>
+<b>0.5.12 Released 08/12/2004</b>
+<ul>
+<li>Fixed ICMP bug reported by nausicaa2. This logic bug has existed for a long time, but was uncovered with the new lowered "Retries" default.
+<li>Fixed TCP SYN Scan timing bug that would be present only when Ping hosts option was not selected.
+<li>Various select() bug fixes and improvements in TCP connect() and ICMP code. Improved ICMP Error Code and Type messages.
+<li>Consolidated redundant ErrorHandling code.
+<li>Removed a debugging return; IP Range bug which caused this option to not work for almost a full year. (Fixed in 0.5.11a Release).
+<li>Improved bpf filtering for TCP SYN scanning.
+<li>Various Installer updates including GPL License, fix broken directory selection, TCP/IP tuning registry entry.
+</ul>
+<b>0.5.11 Released 06/28/2004</b>
+<ul>
+<li>Removed debugging information accidentally left in 0.5.10.
+<li>Only ping host until you receive one ICMP echo reply. No need to waste time with additional ICMP echo requests.<br>
+Also keep trap of ICMP echo reply time and use it for TCP SYN timings.
+<li>Report when target host does not support NetBIOS over TCP. 0.5.10 introduced the logic to skip SMB queries against hosts
+that did not respond to a TCP SYN on port 445 or 139.
+<li>Given an IP address and not a hostname, ping host to see if it responds before attempting DNS resolution.
+This increases performance against hosts that are not up as Win32's gethostbyname and gethostbyaddr will fallback
+and attempt NetBIOS resolution.
+<li>Do a better job at obtaining local IP address. Ensure interface is both up and not loopback.
+<li>Ability to stop in the middle of TCP SYN scan.
+<li>Fixed bug on multi interfaced systems where internal pcap interface was not synchronized with internal win32 interface causing SendArp to be
+unable to retrieve default gateway MAC address needed for TCP SYN scans.
+<li>On Single Scan type, Stop button was not reverting back to Exit button upon completion.
+</ul>
+<b>0.5.10 Released 02/03/2004</b>
+<ul>
+<li>Added TCP SYN port scanner. As of 0.5.10, winfingerprint requires <A href="http://winpcap.polito.it/301a/download.htm">WinPcap</a>.<br>
+(3.01alpha or better is recommended)
+<li>TCP non-blocking connect() scans are now only performed against ports that would return banners (21,22,23,25,80,110,119,143, 443)
+and that were found open with the SYN scan.
+<li>Winfingerprint now performs a TCP SYN against TCP 445 and 139. If neither of these ports return a SYN|ACK then all SMB queries will be skipped.
+(The queries would be unsuccessful anyway).
+<li>Peter Kuznetsov [peter@lucos.net] pointed out several memory leak problems in the NET_* functions.
+Went through and standardized on his proposed fix.
+<li>Peter Kuznetsov [peter@lucos.net] also found some problems in the TCP and UDP sockets function related to lpsock.
+<li>winfingerprint-cli was performing a _flushall() call that was breaking list input.
+<li>Winfingerprint and winfingerprint-cli now both report hostname lookup failure, rather than just skipping host.
+</ul>
+<b>0.5.9 Released 09/02/2003</b>
+<ul>
+<li>Fixed memory leaks in ADSI_OSVersion(), ADSI_Services_Users_Groups(), and NET_Local_Groups() reported by shadowfen.
+<li>Fixed crashes in WMI Enumerations due to an incorrect SysFreeString() reported by many, fix suggested by shadowfen.
+<li>Fixed TCP Port Banner Grabbing
+<li>Fixed memory leak in Net_Shares
+<li>Fixed RichEdit Control text insertion bug
+</ul>
+<b>0.5.8 Released 06/13/2003</b>
+<ul>
+<li>Netmask and Inverted Netmask support for IP Range and IP List scan types.
+<li>Fixed RegQueryValueEx() access level consistency within Registry function.
+<li>Added WMI query support for OS, Services, Service Pack, HotFix,and MAC Address Enumeration. (Requires Administrative Privileges on remote system).
+<li>Rewrote the WfpEngine class, breaking NET, ADSI, and WMI queries into their own functions with consistent naming conventions.
+<li>Changed "Transports" option name to "NBT Info" so that it is more obvious that this option is similar to nbtstat / nbtscan. Also modified output
+to now include DOMAIN in addition to COMPUTERNAME and MAC Address.
+<li>Fixed Index in Help.
+</ul>
+<b>0.5.7 Released 04/04/2003</b>
+<ul>
+<li>Ping function now respects winfingerprint's number of retries. Output also looks more like ping.exe
+<li>Fixed a bug where Registry connections were not being properly closed (sometimes).
+<li>Increased limit of ephemeral ports from (1024-5000) to (1024-65534) via optional install-time registry setting.
+<li>Decreased the TIME_WAIT time from the default 4 minutes to 30 seconds via optional install-time registry setting.
+<li>TCPSockets() and UDPSockets() now use a dynamically allocated doubly-linked list instead of a staticly allocated buffer to hold socket information structure.
+<li>Fixed bug where targets supplied with a hostname would not be properly pinged, or tcp/udp portscanned. This bug was introduced with the new Resolver()
+function which appeared in 0.5.6
+<li>Propery close raw sockets in ICMPSockets().
+</ul>
+<b>0.5.6 Released: 03/16/2003</b>
+<ul>
+<li>Rewrote TCP and UDP Portscanner code.
+<li>Only intialize/unititialize COM dll once per thread.
+<li>Active Directory Session Enumeration now displays seconds connected/seconds idle like the NT Domain version. 
+<li>Allow user to control number of retries and maximum connections.
+<li>Added "sqlping" feature with permission from chip@sqlsecurity.com.
+<li>Now only performs inet_addr() gethostbyname() and gethostbyaddr() once in new Resolver() function.
+<li>Moved ip_address, dns, szComputerM, and szComputerW into a node struct which is now passed
+to all functions.
+<li>Added a patch (with some of my own modifications) from Peter Kuznetsov. Now the List of IPs
+option supports a list of ranges in the following format "192.168.1.1 - 192.168.1.15"
+<li>Cursor changes to hand over richedit control hyperlinks. Thanks Mike Davis.
+<li>Cleaned up RPC bindings output and nbtstat query MAC addresses,
+</ul>
+<b>0.5.5 Released: 12/17/2002</b>
+<ul>
+<li>NetBIOS connections if successful are now properly disconnected reported by Kuang Kuo Liu.
+<li>HTTP,FTP,and Telnet services now show RichEdit2 hyperlinks properly.
+<li>SNMP functionality Huge thanks to Kuang Kuo Liu for supplying an ASN parsing
+function. I had existing SNMP code, but it was disabled.
+<li>Password Policy Enumeration when Users option is checked also thanks to Kuang Kuo Liu.
+<li>Bindings Enumeration also thanks to Kuang Kuo Liu.
+<li>TCP Portscans fixed for winfingerprintcli.exe (command line version).
+<li>New Show Errors Checkbox. Error Messages are turned off by default now for cleaner reports.
+<li>SMB Fingerprinting is no longer a forced option even if not selected.
+<li>Security Event Log enumeration is now enabled although it still needs some work. 
+</ul>
+<br>
+<b>0.5.4 Released: 11/15/2002</b>
+<ul>
+<li>Fixed Multiple connections to remote registry leaving open handles. Reported by Mike Clark. Fixed similar bug where open handle to service control manager could be left open if an error occured after successful connection. 
+<li>Cleaned up code by introducing NetErrorHandler() function for formatting NET_API_STATUS error messages. Consistently initialize all NET_API_STATUS nStatus = NULL;
+<li>Added memory leak checking for DEBUG builds and fixed some memory leaks found with it.
+<li>Noted that Active Directory Scanning works differently on W2k than on XP. W2k can only Win Fingerprint, while XP can Win Fingerprint and Enumerate Users, Groups, and Services.
+<li>Turned on Pentium Pro compiler optimizations, fixed some unitilialized variables, and some minor code formatting.
+<li>Perform SID Lookups on computername, users, and groups. This is my implementation of user2sid by Evgenii Rudnyi.
+<li>Added nbtstat-like query to UDPSockets() function to perform NetBIOS Lookup if NetWkstaGetInfo() call fails. NetWkstaGetInfo requires elevated privileges and fails quite often. 
+<li>Considerable output cleanup.
+<li>Added a Stop button for IP List, IP Range, and Neighborhood Scans.
+<li>Drastically improved accuracy and the success rate for banner grabbing durint TCP Portscans by introducing a short Sleep().
+<li>Cleaned up UDP Portscan, still can be inaccurate against some hosts.
+<li>Added Active Directory Support for Session Enumeration.
+<li>Changed RichEdit Control from version 1.0 to version 2.0 (allowing for hyperlinks within output).
+<li>Implemented hyerplinks in output window negating the need to the interactive function, so I removed the interactive functionality.
+</ul>
+<br>
+<b>0.5.3 Released: 09/25/2002</b>
+<ul>
+<li>Fixed "Long IP problems" reported by shadowfen. szComputerM and szComputerW, and MultibytetoWideChar()
+where resized to 18 characters to 17 characters. This bug crept into the 0.5.1 release through the use of lmcons.h
+<li>Packaged activeds.dll and adsldpc.dll into installer (Reported by ludovic petit and others.)
+<li>Can now specify different port ranges for both TCP and UDP scans.
+<li>Major Code Cleanup of Launch() function, now broken up into Stage() and Launch().
+<li>Fixed Error Handling for Transport and Session Enumeration functions. Reported by shadowfen.
+<li>Set Rich Edit Control to Read Only during scans.
+<li>Report "Done." when scan is completed.
+<li>Migrated from VC++6.0 to VC++ .NET
+<li>Added changeable timeout for TCP/UDP/ICMP scans (select) and send and receive timeouts (setsockopt). Suggested by Justin Lindy.
+<li>Added "Network Neighborhood" scan from the old winfingerprint 2.29 command line version except this time you can enumerate the entire network neighborhood by leaving option blank, or specify which domain to enumerate. (Suggested by Bret).
+<li>Rewrote help.
+</ul>
+<b>0.5.2 and 0.5.2a</b>
+These releases addressed error handling issues reported by shadowfen and were released sooner than I would have liked.
+Rather than releasing winfingerprint "too soon", I created the "current" release packages that contain bugs fixes since the latest release version.
+Once a new release is issued, the current release will be removed until it contains fixes or feature enhancements over the previous release.
+<p>
+<b>0.5.1 Released: 08/20/2002</b>
+<ul>
+<li>Winfingerprint color scheme now follows Windows color scheme rather than being hardcoded to my personal settings.
+<li>Fixed incorrect Overlapped I/O operation error messages for Registry Enumeration, Disk Enumeration, Date and Time,
+User Enumeration, and Group Enumeration functions reported by Doug Dexter. These functions do not SetLastError(). This
+is the same fixed used in 0.4.4 to stop the Overlapped I/O errors for the Winfingerprint function.
+<li>Now supports IP Range, IP Address List, or Single Host scanning options.
+<li>Fixed bug in the Null Sessions option where an error was reported even if the null IPC$ session was successful.
+<li>Code cleanup and better use of lmcons.h
+<li>Winfingerprintcli: Added _flushall() function to flush file handles, Synchronized error handling fixes from winfingerprint gui.
+</ul>
+<b>0.5.0 Released: 07/06/2002</b><br>
+<ul>
+<li>New Interface Layout.
+<li>Active Directory Support.<br>
+Network Type: NT Domain or Active Directory. This option affects the method of OS Detection, User, Group, and Service Enumeration.
+<li>If End Port < Start Port, switch Start Port and End Port, if End IP < Start IP, switch Start IP and End IP.
+<li>Implemented Dialog Data Exchange (DDX) and (DDV) and hooked the member variables directly to the Control IDs using ClassWizard. 
+<li>Moved all of the "work" from the CWinfingerprintDlg class into the new CWfpEngine class.
+<li>CWfpEngine now launched in its own worker thread. This eliminates the "hanging GUI while scan is being performed" in all previous versions.
+<li>Updated Help with sample outputs and validated all HTML.
+<li>Now bundled with <b>winfingerprintcli.exe</b><br>
+<ul>
+<li>MFC Commandline version of winfingerprint. Codebase derived from winfingerprint 0.5.0 (GUI version). Supports all scanning
+features except "Interactive".
+<li>Ability to scan single host, list of hosts, or IP Range.
+<li>With the release of winfingerprintcli, winfingerprintclassic and winfingerprint 2.xx are officially unsupported.
+</ul>
+</ul>
+</ul>
+<b>0.4.5 Released: 06/04/2002</b><br>
+<ul>
+<li> Complete rewrite of non-blocking select TCP connect() Portscanner.
+<li> New non-blocking select UDP Portscanner.
+<li> Rewrite of ICMP (Ping) function.
+<li>Launching default web browser via ShellExecute() against enumerated ftpd and httpd services introduced as a default in 0.4.4 is now an Interactive option.
+<li>New Exploring open NetBIOS shares via ShellExecute() Interactive option.
+</ul>
+<b>0.4.4 Released: 05/02/2002</b><br>
+<ul>
+<li> Fixed output bug introduced in 0.4.3 caused by too small of a character buffer by converting to CString.
+<li> Fixed Registry Service Pack output bug by checking for success before displaying.
+<li> New Interactive feature. Read corresponding help page for instructions and examples.
+<li> Fixed/Changed Icon.
+<li> NetBIOS shares are now checked to see if they are accessible without password.
+<li> Winfingerprint option will no longer return Overlapped I/O operation in progress errors!<br>
+NetServerGetInfo() does not properly SetLastError(), instead use return value of NET_API_STATUS.
+<li> If W3SVC (IIS), WARSVR (War-FTPD), or MSFTPSVC (MS FTP) are running when Services are enumerated,
+the default browser will be launched minimized ftp://ip or http://ip 
+</ul>
+<b>0.4.3 Released: 04/10/2002</b><br>
+<ul>
+<li> Instead of passing CEdit pointer to ever function, use CString += operater
+to concatenate data output and then update the CEdit box once for each scanned host.<br>
+<li> Fixed repaint bug by using SendDlgItemMessage() which doesn't return until the process is complete rather
+than using output->ReplaceSel();
+<li> Now calculates elapsed scan time per host in seconds/milliseconds inspired by request from enjay.
+<li> Output is now editable (was read only) allowing modification of output (for notes, comments) before saving.
+<li> New WSAErrorHander() Function handles all WSAGetLastError() calls.
+<li> Changed compiler options to /Ox (Full Optimization)<br>
+Sacrificing 4kb in size for maximum speed.
+</ul>
+<b>0.4.2 Released: 03/01/2002</b><br>
+<ul>
+<li>Group Fixes:<br>
+- Now Both Global and Local Groups are enumerated.
+- User/Global Group Enumeration code both now utilize the same function<br>
+ (NetQueryDisplayInformation) and the level (1 = User, 3 = Group) is passed.<br>
+- Group Members are now enumerated (NetGroupGetUsers.)<br>
+<li> Updated User Enumeration code to display new win2k/xp information.<br>
+<li> Updated Winfingerprint OS Detection to Show more OS Types,<br>
+- Re-enabled Platform and Comment information.<br>
+- Stopped duplicate NetServerGetInfo Errorhandling. 
+<li> Updated NetBIOS Share information to include "type".
+<li> Wrote a "Real" help system instead of just a text file.
+<li> Portscan Fixes:<br>
+- Added fix for 22/tcp ssh not being in windows services file<br>
+- Fixed bug found by jgallard@free.fr<br>
+<li> Now winfingerprint starts with your actual IP address instead of
+   127.0.0.1
+<li> Time and Ping functions report errors to dialog rather than messsage box.
+<li> Updated Group Enumeration to include both Local and Global Groups
+<li> Added SQL 'sa' no password check if server is running SQL.
+<li> One more Portscan Fix reported by jgallard@free.fr
+<li> Launch Optimization.<br>
+- Removed Launch() function as UI would not repaint until Launch() returned.<br>
+- Moved Scan Option selection out of for loop. Thirteen GetCheck()'s  were being performed<br>
+against every host scanned. Now options are only checked once. 
+<li> If NullSession option was selected and the connection was not established, don't try to disconnect.
+
+</ul>
+ 
+
+<b>0.4.1  Released: 02/03/2002</b><br>
+<ul>
+<li> _s*printf() to _sn*printf().
+<li> Win Fingerprinting is now optional. Useful only if you want to just use 
+ping and or tcp portscan against Unix hosts.
+<li> Fixed extremely slow TCP Portscanning found in 0.3.0 and 0.4.0
+<li> Added Active Directory Support which is currently turned off ;)
+<li> Added getservbyport() lookups to portscanning code.
+<li> Migrated from Installshield to Nullsoft SuperPimp.
+  From: http://www.nullsoft.com/free/nsis/
+<li> Finally adding README (instructions/changelog) to menu.
+  Adding uninstall to menu
+  Installshield = 1180KB (Bloat)
+  Superpimp     = 663KB
+  
+<li> Added GPL to sourcecode (winfingerprint has always been GPL)
+<li> Now works on Windows XP.
+</ul>
+
+<b>0.4.0 Released: 11/14/2001</b><br>
+<ul>
+<li> Added DNS Resolution to ICMP function.
+<li> Added Domain\computername to Fingerprinting Function.
+<li> Rewrote TCP Portscan. Now, non-blocking connect() scanner with banner grabbing capability.
+<li> GUI Changes (It's black).
+<li> Fixed poorly packaged installshield from 0.3.0 release.
+</ul>
+<b>0.3.0 Released: 09/04/2001</b><br>
+<ul>
+<li> Disk Enumeration
+<li> Fixed group enumeration
+<li> Lots of code cleanup.
+<li> Fixed session enumeration
+<li> Fixed remote date and time
+<li> IP Range validity checks.
+</ul>
+<b>0.2.0 Released: 07/11/2001</b><br>
+<ul> 
+<li> Added IP Address Range support.
+<li> Added TCP Port Scan Range
+<li> Changed ClistBox to CEditBox
+<li> Added Save Output Function.
+<li> Made Null Sessions an option
+<li> Removed WNetEnumResource() (The old Network Enumeration Function)
+<li> Fixed Null Session Bug introduced in 0.1.0
+<li> Fixed ErrorHandler() to actually return appropriate error message.
+<li> Code Optimizations and Cleanups.
+</ul>
+<b>0.1.0 Released: 03/12/2001</b><br> 
+Initial release of winfingerprint with integrated GUI! This 
+version is basically winfingerprint 2.29 with an MFC GUI.
+winfingerprint 2.29 is a commandline application and is now
+available as winfingerprintclassic in CVS.
+
+Successful merger of winfingerprintclassic 2.29 command line version of winfingerprint and wfple 0.1.0 (discontinued). winfingerprintclassic was very stable although it was commandline. wfple was a short lived, limited edition as I migrated to the MFC GUI version.
+
+</BODY></HTML>
