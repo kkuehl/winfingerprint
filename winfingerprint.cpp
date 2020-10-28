@@ -2,7 +2,7 @@
    $Id: winfingerprint.cpp,v 1.18 2005/01/04 02:09:29 vacuum Exp $
    winfingerprint.cpp : Defines the class behaviors for the application.
    This file is part of winfingerprint.
-   Copyright 1999-2005 Kirby Kuehl (vacuum@users.sourceforge.net)
+   Copyright 1999-2020 Kirby Kuehl (kkuehl@gmail.com)
 
    winfingerprint is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -33,11 +33,11 @@ static char THIS_FILE[] = __FILE__;
 // CWinfingerprintApp
 
 BEGIN_MESSAGE_MAP(CWinfingerprintApp, CWinApp)
-	//{{AFX_MSG_MAP(CWinfingerprintApp)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
-	//}}AFX_MSG
-	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
+//{{AFX_MSG_MAP(CWinfingerprintApp)
+// NOTE - the ClassWizard will add and remove mapping macros here.
+//    DO NOT EDIT what you see in these blocks of generated code!
+//}}AFX_MSG
+ON_COMMAND(ID_HELP, CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -67,10 +67,10 @@ BOOL CWinfingerprintApp::InitInstance()
 #ifdef _AFXDLL
 //	Enable3dControls();			// Call this when using MFC in a shared DLL
 #else
-	Enable3dControlsStatic();	// Call this when linking to MFC statically
+	Enable3dControlsStatic(); // Call this when linking to MFC statically
 #endif
-	AfxInitRichEdit2();			// Initialize RichEdit Control
-	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+	AfxInitRichEdit2(); // Initialize RichEdit Control
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	CWinfingerprintDlg dlg;
 	m_pMainWnd = &dlg;
 	int nResponse = dlg.DoModal();
